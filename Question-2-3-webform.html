@@ -71,7 +71,7 @@
     <script>
         "use strict";
 
-        (function () {
+         (function () {
             var validateInput;
 
             $.urlParam = function (name) {
@@ -107,10 +107,8 @@
                         $referencedElement = $input;
                     }
 
-                    // Added 'href' to create focusable error link
                     $error = $('<a href="#' + input + '">' + message + '</a>');
                     $error.click(function (e) {
-                        // When clicked, the focus moves to the referenced element
                         $referencedElement.focus();
                         return e.preventDefault();
                     });
@@ -118,7 +116,7 @@
                     $elementToDescribe.attr('aria-describedby', input + '_description');
                     $errorContainer.append('<li>').find('li:last').append($error);
 
-                    // Automatically moves focus to the error section after form submission
+                    // Automatically move focus to the errors section
                     if ($(':not(form):focus').length === 0) {
                         $('fieldset.errors').attr('tabindex', -1).focus();
                     }
@@ -137,13 +135,16 @@
 
             $(document).ready(function () {
                 if ($.urlParam('validate')) {
-                    validateInput('name', 'Please enter your name!');
-                    validateInput('biography', 'Please tell us something about your history!');
-                    validateInput('gender', 'Please tell us your gender!');
-                    validateInput('accept_agbs', 'You must accept our terms and conditions!');
+                    var isFormValid = true;
 
-                    // Ensure alert is accessible
-                    if ($('.error').length === 0) {
+                    // Check each required field and validate it
+                    isFormValid &= validateInput('name', 'Please enter your name!');
+                    isFormValid &= validateInput('biography', 'Please tell us something about your history!');
+                    isFormValid &= validateInput('gender', 'Please tell us your gender!');
+                    isFormValid &= validateInput('accept_agbs', 'You must accept our terms and conditions!');
+
+                    // Only show success alert if all inputs are valid (isFormValid is true)
+                    if ($('.error').length === 0 && isFormValid) {
                         $('form').append('<div role="alert" tabindex="0">All inputs are valid.</div>').find('[role="alert"]').focus();
                     }
                 }
