@@ -24,9 +24,13 @@ body {
 a{
   color: #006b3a;
 }
-main a{
-  outline: none;
-}
+a:focus,
+    button:focus,
+    input:focus {
+      outline: 2px solid #006b3a; /* Add focus indicator */
+      outline-offset: 2px; /* Spacing for better visibility */
+    }
+
 h2 {
   margin-top: 0;
 }
@@ -73,6 +77,9 @@ header {
   font-size: 18px;
   margin-right: 18px;
 }
+.menu a:focus {
+      outline: 2px solid #ffcc00; /* Visible focus outline for menu items */
+    }
 
 .menu a:last-child {
   margin-right: 0;
@@ -203,24 +210,24 @@ article p {
       <h1 class="logo">The Funion</h1>
       
       <!-- Maybe this could be improved with aria-activedescendant later? -->
-      <nav class="menu">
-        <a href="#">Home</a>
-        <a href="#">Politics</a>
-        <a href="#" tabindex="-1">Business</a>
-        <a href="#">Entertainment</a>
-        <a href="#">Sports</a>
-        <a href="#" class="btn-search pull-right"><img src="https://raw.githubusercontent.com/udacity/ud891/2de2a0688c68809a3b453db3a24b1a59e8401459/lesson2-focus/02-dom-order/images/search.svg" alt="Search" />Search</a> 
-
-      </nav>
+      <nav class="menu" role="navigation" aria-label="Main menu">
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Politics</a></li>
+    <li><a href="#">Business</a></li> <!-- Removed tabindex=-1 to allow tabbing -->
+    <li><a href="#">Entertainment</a></li>
+    <li><a href="#">Sports</a></li>
+    <li>
+      <a href="#" class="btn-search pull-right">
+        <img src="https://raw.githubusercontent.com/udacity/ud891/2de2a0688c68809a3b453db3a24b1a59e8401459/lesson2-focus/02-dom-order/images/search.svg" alt="Search" />
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
     </div>
   </header>
-  <div class="newsletter">
-    <div class="container">
-      <h3>Like the Funion? Consider joining our newsletter!</h3>
-      <input type="text">
-      <button type="button" onfocus="getFocus()">Sign up</button></div>
-      
-    </div>
+  
   </div>
   <main class="container">
     <h2 class="offscreen">Top story</h2>
@@ -243,7 +250,7 @@ article p {
         </div>
         <article>
           <h3 class="headline">Bee wonders if maybe everyone else is a drone and he's the only one who has it "figured out."</h3>
-          <p><a href="#" tabindex="1"><b>Read More</b></a></p>
+      <p><a href="#" tabindex="0"><b>Read More</b></a></p> <!-- Ensured tabindex is 0, so it's part of normal tabbing order -->
           <img src="https://github.com/udacity/ud891/blob/gh-pages/lesson2-focus/02-dom-order/images/bee.jpg?raw=true" alt="A bee on top of a flower" />
         </article>
       </div>
@@ -286,10 +293,17 @@ article p {
     </div>
     
   </main>
-  <!--   stuff can be added here :)
+ 
   <footer>
+    <div class="newsletter">
+    <div class="container">
+      <h3>Like the Funion? Consider joining our newsletter!</h3>
+      <input type="text">
+      <button type="button" onclick="getFocus()">Sign up</button></div>
+      
+    </div>
   </footer>
-  -->
+  
   
   <script>
     function getFocus() {
